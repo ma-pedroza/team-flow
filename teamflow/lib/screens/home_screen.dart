@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../models/team.dart';
+import '../widgets/team_card.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
@@ -15,7 +16,14 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('TeamFlow')),
-      body: const Center(child: Text('Times')),
+      body: ListView.builder(
+        itemCount: teams.length,
+        itemBuilder: (context, index) {
+          final team = teams[index];
+
+          return TeamCard(team: team);
+        },
+      ),
     );
   }
 }
