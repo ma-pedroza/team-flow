@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../models/team.dart';
 
+
 class TeamCard extends StatelessWidget {
   final Team team;
 
@@ -10,11 +11,13 @@ class TeamCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      padding: const EdgeInsets.all(16),
+      alignment: Alignment.topCenter,
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+      constraints: const BoxConstraints(
+        minHeight: 270
+      ),
       decoration: BoxDecoration(
-        color: Colors.indigo,
-        borderRadius: BorderRadius.circular(16),
+        color: Color(team.colorValue),
       ),
       child: Text(
         team.name,
