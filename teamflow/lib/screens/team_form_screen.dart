@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:teamflow/database/database.dart';
+import 'package:teamflow/models/team.dart';
 
 class TeamFormScreen extends StatefulWidget {
   const TeamFormScreen({super.key});
@@ -14,6 +16,14 @@ class _TeamFormScreenState extends State<TeamFormScreen> {
 
   int selectedColorValue = 0xFF3F51B5;
 
+  @override
+  void dispose() {
+    nameController.dispose();
+    areaController.dispose();
+    descriptionController.dispose();
+    super.dispose();
+  }
+
   final List<int> teamColors = [
     0xFF3F51B5,
     0xFF00897B,
@@ -22,6 +32,7 @@ class _TeamFormScreenState extends State<TeamFormScreen> {
     0xFFC62828,
   ];
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Criar equipe')),
@@ -138,8 +149,21 @@ class _TeamFormScreenState extends State<TeamFormScreen> {
                       vertical: 16,
                     ),
                   ),
-                  onPressed: () {
-                    // implementar
+                  onPressed: () async {
+                    final team = Team(
+                      name: nameController.text,
+                      area: areaController.text,
+                      description: descriptionController.text,
+                      colorValue: selectedColorValue,
+                    );
+
+                    await AppDatabase.insertTeam(team);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Equipe criada com sucesso'),
+                      ),
+                    );
+                    Navigator.pop(context);
                   },
                   icon: const Icon(Icons.save, size: 24),
                   label: const Text(
